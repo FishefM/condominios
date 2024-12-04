@@ -1,39 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gestor de Empleados</title>
 </head>
+
 <body>
-            <!-- Tabla de reporte -->
-            <div class="table-responsive">
-                <table class="table table-bordered text-center align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Horario de entrada</th>
-                            <th>Asunto</th>
-                            <th>Número de Condómino</th>
-                            <th>Nombre del condómino</th>
-                            <th>Número de integrantes</th>
-                            <th>Horario de salida</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Juan Pérez</td>
-                            <td>09:00 am</td>
-                            <td>Visita</td>
-                            <td>101</td>
-                            <td>Pedro López</td>
-                            <td>3</td>
-                            <td>10:00 pm</td>
-                        </tr>
-                        <!-- Más filas según sea necesario -->
-                    </tbody>
-                </table>
+    <h1>GESTOR DE EMPLEADOS</h1>
+    <div class="container">
+        <div class="fila">
+            <button class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Agregar
+            </button>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Ver Empleados eliminados
+                </label>
             </div>
         </div>
+        <!-- Tabla de reporte -->
+        <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo electronico</th>
+                        <th>Teléfono</th>
+                        <th>Teléfono de emergencia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Juan Pérez</td>
+                        <td>yucefhernandez@hotmail.com</td>
+                        <td>5545516139</td>
+                        <td>5545162132</td>
+                        <td>Borrar Editar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
 </body>
+
 </html>
