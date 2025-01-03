@@ -1,32 +1,50 @@
 # SOFTWARE DE ASISTENCIA PARA CONTROL DE CONDOMINIOS
 
+NOTA: Las credenciales de la base de datos están en el archivo `Global.php` dentro del directorio `config`
+
 ## Inicialización del proyecto
 
 1. Descargar Composer
+
+```bash
+sudo pacman -S composer
+```
+
+[Para otros sistemas operativos, click aquí](https://getcomposer.org/download/)
+
 2. Instalar las dependencias
 
 ```bash
 composer install
 ```
 
-NOTA: Si hay problemas con composer, se deja la carpeta vendor para así evitar la necesidad de instalar composer
+3. Instalar NodeJS junto con NPM con ayuda de NVM (Node Version Manager):
 
-## Configuración del archivo .env
+- [Linux](https://github.com/nvm-sh/nvm)
+- [Windows](https://github.com/coreybutler/nvm-windows)
 
-1. Crea un archivo `.env` en `config/`
+4. Instalar las librerías necesarias
 
 ```bash
-touch config/.env
+npm install
 ```
 
-2. La estructura del archivo `.env` es la siguiente:
+5. Dar permisos de escritura al directorio `uploads/`
 
-```env
-DB_SERVER=<SERVIDOR DE LA BASE DE DATOS, EJ. 127.0.0.1>
-DB_USER=<USUARIO>
-DB_PASS=<CONTRASEÑA>
-DB_NAME=<NOMBRE DE LA BASE DE DATOS>
+```bash
+chmod 777 uploads
 ```
+
+6. Tener instalado MySQL o MariaDB y activar la extensión en el `php.ini` y también habilitar PDO. Además, se debe cargar el SQL del proyecto en MySQL, el SQL está ubicado en `config/db.sql`.
+
+7. Instalar la extensión `Imagick` e `ImagickPixel`
+
+```bash
+sudo pacman -S imagemagick php-imagick
+```
+
+- Habilitar la extensión en php.ini `extension=imagick`
+- Si `Inteliphense` no detecta `Imagick`, se necesita activar en la configuración de este. Para `VSCode`: Archivo > Preferencias > Configuración > Busca `stubs` y aparecerá una lista en la que se muestran todas las extensiones de PHP, habilita `imagick`
 
 ## Configuración para IIS
 

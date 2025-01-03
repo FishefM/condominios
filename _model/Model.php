@@ -1,20 +1,34 @@
 <?php
-require_once "classes/MySQLAux.php";
-require __DIR__ . '/../vendor/autoload.php';
-
-use Dotenv\Dotenv;
-
-// Cargar las variables del archivo .env
-$dotenv = Dotenv::createImmutable(__DIR__ . "/../config/");
-$dotenv->load();
-
+require_once __DIR__ . "/../classes/MySQLAux.php";
 class Model
 {
-  public $baseURL = "/condominios/";
-
-  public function seleccionaRegistros($tabla, $campos, $condicion = null, $params = null)
+  public function seleccionaRegistros($tabla, $campos, $condicion = null, $params = null, $joins = null)
   {
-    $bd = new MySQLAux($_ENV["DB_SERVER"], $_ENV["DB_NAME"], $_ENV["DB_USER"], $_ENV["DB_PASS"]);
-    return $bd->selectRows($tabla, $campos, $condicion, $params);
+    $bd = new MySQLAux(DB_HOST, DB_BASE, DB_USR, DB_PASS);
+    return $bd->selectRows($tabla, $campos, $condicion, $params, $joins);
+  }
+
+  public function agregaRegistro($tabla, $campos, $params)
+  {
+    $bd = new MySQLAux(DB_HOST, DB_BASE, DB_USR, DB_PASS);
+    return $bd->insertRow($tabla, $campos, $params) > 0;
+  }
+
+  public function agregaRegistroID($tabla, $campos, $params)
+  {
+    $bd = new MySQLAux(DB_HOST, DB_BASE, DB_USR, DB_PASS);
+    return $bd->insertRow($tabla, $campos, $params);
+  }
+
+  public function modificaRegistro($tabla, $campos, $condicion, $params)
+  {
+    $bd = new MySQLAux(DB_HOST, DB_BASE, DB_USR, DB_PASS);
+    return $bd->updateRow($tabla, $campos, $condicion, $params) > 0;
+  }
+
+  public function eliminaRegistro($tabla, $condicion, $params = null)
+  {
+    $bd = new MySQLAux(DB_HOST, DB_BASE, DB_USR, DB_PASS);
+    return $bd->deleteRow($tabla, $condicion, $params);
   }
 }

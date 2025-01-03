@@ -1,25 +1,26 @@
-<?php
-require_once "_model/Model.php";
-$model = new Model();
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <base href="http://localhost<?php echo $model->baseURL ?>">
+    <base href="<?php echo SITE_URL ?>">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo "Condominios | " . $ctrl->title ?></title>
     <link rel="icon" href="img/placeholder_logo.png">
     <!-- Bootstrap CSS -->
-    <link href="utils/bootstrap-v5.3.2/bootstrap.min.css" rel="stylesheet">
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
-    <link href="utils/datatables-1.13.6/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="node_modules/datatables.net-dt/css/dataTables.dataTables.min.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css" />
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="utils/fontawesome-free-6.7.1-web/css/all.min.css" />
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="node_modules/flatpickr/dist/flatpickr.min.css" />
     <!-- CSS principal -->
     <link rel="stylesheet" href="css/master.css" />
+    <!-- CSS de cada menú -->
+    <link rel="stylesheet" href="css/menu.css">
     <!-- CSS de cada controlador -->
     <style>
         <?php $ctrl->renderCSS() ?>
@@ -52,10 +53,18 @@ $model = new Model();
                 <?php endforeach ?>
             </ul>
         </div>
+        <?php
+        if (isset($_SESSION) && count($_SESSION) !== 0 && $_SESSION["usuario"] !== "administrador") {
+            $foto_path = isset($_SESSION["datos"]["foto_path"]) ? $_SESSION["datos"]["foto_path"] : "./uploads/placeholderuser.png";
+            echo '<img id="foto-user-header" src="' . $foto_path . '" alt="Foto del usuario">';
+        }
+        ?>
     </nav>
     <div class="container-fluid">
+        <!-- Contenido de cada controlador -->
         <?php $ctrl->renderContent(); ?>
     </div>
+    <!-- Footer -->
     <footer class="py-5 border-top">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5">
@@ -94,19 +103,40 @@ $model = new Model();
         </div>
     </footer>
     <!-- jQuery -->
-    <script src="utils/jquery-v3.7.1/jquery-3.7.1.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="utils/bootstrap-v5.3.2/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables JS -->
-    <script src="utils/datatables-1.13.6/jquery.dataTables.min.js"></script>
-    <script src="utils/datatables-1.13.6/dataTables.bootstrap5.min.js"></script>
+    <script src="node_modules/datatables.net/js/dataTables.min.js"></script>
+    <script src="node_modules/datatables.net-dt/js/dataTables.dataTables.min.js"></script>
     <!-- SweetAlert JS -->
-    <script src="utils/sweetalert2-v11.14.5/sweetalert2@11.js"></script>
-    <script
-        type="module"
-        src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/ring.js"></script>
+    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+    <!-- Fontawesome JS -->
+    <script src="node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
+    <!-- LDRS UiBall JS -->
+    <script type="module" src="node_modules/ldrs/dist/auto/ring.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="node_modules/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- HTML5-QRCode -->
+    <script src="node_modules/html5-qrcode/html5-qrcode.min.js"></script>
     <!-- JS del master -->
     <script src="js/master.js"></script>
+    <!-- Confirmación de procesos -->
+    <script src="js/confirmacionProcesos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            verificarIndex(`<?php echo SITE_URL ?>`);
+            sesion(
+                `<?php echo json_encode(["sesion" => $_SESSION]) ?>`,
+                `<?php echo SITE_URL ?>`
+            );
+            return;
+        });
+    </script>
+    <!-- JS para DataTable -->
+    <script>
+        var tblDatos = new DataTable("#tblDatos");
+    </script>
     <!-- JS del controlador -->
     <script>
         <?php $ctrl->renderJS() ?>

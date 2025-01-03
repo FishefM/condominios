@@ -1,51 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Empleados</title>
-</head>
-
-<body>
-    <h1>GESTOR DE EMPLEADOS</h1>
-    <div class="container">
-        <div class="fila">
-            <button class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i> Agregar
-            </button>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Ver Empleados eliminados
-                </label>
-            </div>
-        </div>
-        <!-- Tabla de reporte -->
-        <div class="table-responsive">
-            <table class="table table-bordered text-center align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Correo electronico</th>
-                        <th>Teléfono</th>
-                        <th>Teléfono de emergencia</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan Pérez</td>
-                        <td>yucefhernandez@hotmail.com</td>
-                        <td>5545516139</td>
-                        <td>5545162132</td>
-                        <td>Borrar Editar</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    </div>
-</body>
-
-</html>
+<!-- Area de contenido -->
+<div class="container-fluid p-4">
+  <a href="<?php echo SITE_URL ?>" class="btn btn-primary">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+  <br><br>
+  <a href="<?php echo SITE_URL . RUTA_ADMINISTRADOR ?>mto-empleados" class="btn btn-success">
+    <i class="fas fa-plus"></i>
+    Agregar
+  </a>
+  <table id="tblDatos" class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>Correo electrónico</th>
+        <th>Teléfono</th>
+        <th>Teléfono de emergencia</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($this->datos as $reg): ?>
+        <tr>
+          <td><?php echo $reg["id_empleado"] ?></td>
+          <td><img src="<?php echo $reg["foto_path"] ?>" class="img-users" /></td>
+          <td><?php echo $reg["nombre"] ?></td>
+          <td><?php echo $reg["email"] ?></td>
+          <td><?php echo $reg["telefono"] ?></td>
+          <td><?php echo $reg["telefono_emergencia"] ?></td>
+          <td>
+            <a class="btn btn-warning" href="<?php echo SITE_URL . RUTA_ADMINISTRADOR ?>mto-empleados/<?php echo $reg["id_empleado"] ?>">
+              <i class="fas fa-pen"></i>
+              Modificar
+            </a>
+            <?php
+            if ($reg["habilitado"]) {
+              echo '<button class="btn btn-danger" id="btn-deshabilitar" data-url="' . SITE_URL .  '" data-usuario="empleado" data-id="' . $reg["id_empleado"] . '">' .
+                '<i class="fa-solid fa-ban"></i>
+                Deshabilitar
+              </button>';
+            } else {
+              echo '<button class="btn btn-success" id="btn-habilitar" data-url="' . SITE_URL .  '" data-usuario="empleado" data-id="' . $reg["id_empleado"] . '">' .
+                '<i class="fa-solid fa-check"></i>
+                Habilitar
+              </button>';
+            }
+            ?>
+          </td>
+        </tr>
+      <?php endforeach ?>
+    </tbody>
+  </table>
+</div>
+<script src="<?php echo SITE_URL . "js/admin/des_hab_usuarios.js" ?>"></script>
